@@ -1,8 +1,8 @@
 {
   "project": "dvd-ingester",
-  "version": "0.1.1",
-  "artifact": "dvd-ingester-0.1.1.tar.gz",
-  "artifact_url": "https://github.com/azide0x37/dvd-ingester/releases/download/v0.1.1/dvd-ingester-0.1.1.tar.gz",
-  "sha256": "d0e41cb35e95afa6cbee2152a8c9d91e23d170dc87ebb99e8d94a98e04702a5b",
+  "version": "0.1.2",
+  "artifact": "dvd-ingester-0.1.2.tar.gz",
+  "artifact_url": "https://github.com/azide0x37/dvd-ingester/releases/download/v0.1.2/dvd-ingester-0.1.2.tar.gz",
+  "sha256": "4140f6c043e3cba039abecc2651397fd20aa772e317852a39c4a33b66528a8c2",
   "installer": "install.sh"
 }
