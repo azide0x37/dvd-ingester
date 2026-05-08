@@ -116,19 +116,14 @@ SAFE_LABEL="$(printf '%s' "$LABEL" | safe_name)"
 SAFE_LABEL="${SAFE_LABEL:-DVD}"
 
 SIZE="$(blockdev --getsize64 "$DEV" 2>/dev/null || echo unknown)"
-if LSDVD_OUTPUT="$(lsdvd "$DEV" 2>>"$LOG_FILE")"; then
-  LSDVD_HASH="$(printf '%s' "$LSDVD_OUTPUT" | sha256sum | awk '{print $1}' | cut -c1-16)"
+UUID="$(blkid -o value -s UUID "$DEV" 2>/dev/null || true)"
+TYPE="$(blkid -o value -s TYPE "$DEV" 2>/dev/null || true)"
+if [ -n "$UUID" ]; then
+  append_log "disk identity collected: label=$LABEL uuid=$UUID type=${TYPE:-unknown} size=$SIZE"
 else
-  append_log "lsdvd failed during fingerprinting; continuing with lsdvd-unavailable"
-  LSDVD_HASH="lsdvd-unavailable"
+  append_log "disk UUID unavailable; using label/type/size identity"
 fi
-
-if ! HEAD_HASH="$(dd if="$DEV" bs=2048 count=4096 iflag=fullblock status=none 2>>"$LOG_FILE" | sha256sum | awk '{print $1}' | cut -c1-16)"; then
-  log "Unable to read DVD sectors for fingerprint from $DEV"
-  log_tail
-  exit 1
-fi
-FP="$(printf '%s|%s|%s|%s\n' "$LABEL" "$SIZE" "$LSDVD_HASH" "$HEAD_HASH" | sha256sum | awk '{print $1}' | cut -c1-20)"
+FP="$(printf '%s|%s|%s|%s\n' "$LABEL" "$UUID" "$TYPE" "$SIZE" | sha256sum | awk '{print $1}' | cut -c1-20)"
 
 RUN_DIR="$WORK_DIR/$FP"
 LOG_FILE="$LOG_DIR/$FP.log"
