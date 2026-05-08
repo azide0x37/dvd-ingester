@@ -118,7 +118,7 @@ install_config() {
 
   # shellcheck disable=SC1090
   . "$CONFIG_FILE"
-  mkdir -p "$ROOT${BASE_DIR:-/var/lib/dvd-ingester}" "$ROOT${WORK_DIR:-/var/lib/dvd-ingester/work}" "$ROOT${LOG_DIR:-/var/lib/dvd-ingester/logs}" "$ROOT${DEST_DIR:-/mnt/nas/DVD-Rips}"
+  mkdir -p "$ROOT${BASE_DIR:-/var/lib/dvd-ingester}" "$ROOT${WORK_DIR:-/var/lib/dvd-ingester/work}" "$ROOT${LOG_DIR:-/var/lib/dvd-ingester/logs}" "$ROOT${DEST_DIR:-/mnt/nas/DVD_Rips}"
   touch "$ROOT${RIPPED_DB:-/var/lib/dvd-ingester/ripped.jsonl}"
 }
 
