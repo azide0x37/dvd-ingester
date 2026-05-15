@@ -1,4 +1,6 @@
-# dvd-ingester Release Notes
+# Changelog
+
+This file is generated from `RELEASE.md`. Update release notes first, then run `make changelog`.
 
 ## 1.0.2
 

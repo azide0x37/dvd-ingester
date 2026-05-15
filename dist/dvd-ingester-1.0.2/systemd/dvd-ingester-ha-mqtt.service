@@ -1,19 +1,18 @@
 [Unit]
-Description=DVD ingest hot-to-cold publish drain
+Description=DVD ingest Home Assistant MQTT bridge
 Documentation=file:/opt/dvd-ingester/current/doc/README.md
-After=local-fs.target
-OnFailure=dvd-ingester-doctor.service
+After=network-online.target local-fs.target
+Wants=network-online.target
 
 [Service]
 Type=oneshot
 EnvironmentFile=-/etc/dvd-ingester/dvd-ingester.env
-ExecStart=/opt/dvd-ingester/current/bin/dvd-publish-one --apply --once
+EnvironmentFile=-/etc/dvd-ingester/dvd-ingester.mqtt.env
+ExecStart=/opt/dvd-ingester/current/bin/dvd-ha-mqtt-bridge --apply --once
+TimeoutStartSec=30s
 RuntimeDirectory=dvd-ingester
 RuntimeDirectoryPreserve=yes
 CacheDirectory=dvd-ingester
-Nice=10
-IOSchedulingClass=best-effort
-IOSchedulingPriority=7
 NoNewPrivileges=true
 PrivateTmp=true
 ProtectHome=true
